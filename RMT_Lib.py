@@ -26,14 +26,13 @@ def getWigner(N, var, ensemble='GOE'):
         raise Exception("invalid ensemble!")
 
 
-# given a list of eigenvalues, returns nearest-neighbor spacings
-def getLevelSpacings(eigvals):
-    CHECK_EIG = all(eigvals.imag - 0 < 1e-14)
-    if not CHECK_EIG:
+# eigs = list of (REAL) eigenvalues
+# returns nearest neighbor level spacings
+def getLevelSpacings(eigs):
+    if not all(eigs.imag < 1e-14):
         raise Exception("Eigenvalues not real!!")
-    eigvals = np.sort(eigvals.real)
-    diff = [eigvals[i + 1] - eigvals[i] for i in range(0, len(eigvals) - 1)]
-    return diff
+    eigs = np.sort(eigs.real)
+    return eigs[1:]-eigs[:-1]
 
 
 # calculates ratios of neighboring level spacings (which gives level statistics) -- dependence on DoS cancels!
