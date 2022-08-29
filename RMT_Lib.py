@@ -15,11 +15,11 @@ import itertools as it
 # output will have diags scaling as σ^2/N and off-diagonals scaling as σ^2/2N
 def getWigner(N, var, ensemble='GOE'):
     if ensemble=='GOE' or ensemble=='goe':
-        M = np.random.normal(0,np.sqrt(var/4N),size=(N,N)) # var of each entry is σ^2/4N
+        M = np.random.normal(0,np.sqrt(var/(4*N)),size=(N,N)) # var of each entry is σ^2/4N
         # now symmetrize and return output 
         return (M+M.T)/2 # now var of diags will now be 4(σ^2/4N)= σ^2/N and var of off-diags is σ^2/2N
     elif ensemble=='GUE' or ensemble=='gue':
-        M  = np.random.normal(0,np.sqrt(var/4N),size=(N,N)) + 1j*np.random.normal(0,np.sqrt(var/4N),size=(N,N))
+        M  = np.random.normal(0,np.sqrt(var/(4*N)),size=(N,N)) + 1j*np.random.normal(0,np.sqrt(var/(4*N)),size=(N,N))
         # make Hermitian
         return (M+np.conjugate(M.T))/2
     else:
